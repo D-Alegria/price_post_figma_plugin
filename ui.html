@@ -1,0 +1,236 @@
+<style>
+  body {
+    height: 100vh;
+    width: 100vw;
+  }
+</style>
+<body>
+  <h3>Ogabassey Product Price list</h3>
+  <div>
+    <h1>Please select a color</h1>
+    <form id="options">
+      <select id="selDay"></select>
+      <button type="button" id="add_item">Add</button>
+    </form>
+    <form id="list"></form>
+  </div>
+
+  <button id="create">Create</button>
+  <button id="cancel">Cancel</button>
+</body>
+<script>
+  var no_of_items = 0;
+  window.addEventListener("load", function () {
+    getDay();
+  });
+
+  function getDay() {
+    var days = ["AWOOF", "NORMAL"];
+    var day = document.getElementById("selDay");
+    for (i of days) {
+      var opt = document.createElement("option");
+      opt.appendChild(document.createTextNode(i));
+      opt.value = i;
+      day.appendChild(opt);
+    }
+  }
+
+  function getCategory(element) {
+    var designs = ["PHONE & LAPTOP", "ACCESSORIES"];
+    for (i of designs) {
+      var opt = document.createElement("option");
+      opt.appendChild(document.createTextNode(i));
+      opt.value = i;
+      element.appendChild(opt);
+    }
+  }
+
+  function getProductTypes(element) {
+    var deviceTypes = ["Premium Used", "Brand New"];
+
+    // var deviceType = document.getElementById(id);
+    for (i of deviceTypes) {
+      var opt = document.createElement("option");
+      opt.appendChild(document.createTextNode(i));
+      opt.value = i;
+      element.appendChild(opt);
+    }
+  }
+
+  function getSizes(element) {
+    var sizes = ["", "4", "8", "16", "32", "64", "128", "256", "512"];
+    for (i of sizes) {
+      var opt = document.createElement("option");
+      opt.appendChild(document.createTextNode(i));
+      opt.value = i;
+      element.appendChild(opt);
+    }
+  }
+  function getDevices(element) {
+    var devices = [
+      "IPhone 12 Pro Max",
+      "IPhone 12 Pro",
+      "IPhone 12",
+      "IPhone 12 Mini",
+      "IPhone 11 Pro Max",
+      "IPhone 11 Pro",
+      "IPhone 11",
+      "IPhone XS Max",
+      "IPhone XS",
+      "IPhone X",
+      "IPhone XR",
+      "IPhone 8 Plus",
+      "IPhone 8",
+      "IPhone 7 Plus",
+      "IPhone 7",
+    ];
+    // var selColor = document.getElementById(id);
+    for (i of devices) {
+      var opt = document.createElement("option");
+      opt.appendChild(document.createTextNode(i));
+      opt.value = i;
+      element.appendChild(opt);
+    }
+  }
+</script>
+
+<script>
+  class Product {
+    constructor(
+      name,
+      amount,
+      description,
+      category,
+      internal_storage,
+      productType,
+      day
+    ) {
+      this.name = name;
+      this.amount = amount;
+      this.description = description;
+      this.category = category;
+      this.internal_storage = internal_storage;
+      this.productType = productType;
+      this.day = day;
+    }
+
+    toString() {
+      return JSON.stringify(this);
+    }
+  }
+</script>
+
+<script>
+  document.getElementById("create").onclick = () => {
+    var day = document.getElementById("options").elements[0].value;
+    var form = document.getElementById("list");
+    var prods = [];
+    for (i of form.elements) {
+      if (i.className == "product") {
+        var name;
+        var amount;
+        var description;
+        var category;
+        var internal_storage;
+        var productType;
+        for (j of i.elements) {
+          if (j.className == "selDevices") {
+            name = j.value;
+          }
+
+          if (j.className == "selCategory") {
+            category = j.value;
+          }
+
+          if (j.className == "amount") {
+            amount = j.value;
+          }
+
+          if (j.className == "description") {
+            description = j.value;
+          }
+
+          if (j.className == "size") {
+            internal_storage = j.value;
+          }
+
+          if (j.className == "selProductType") {
+            productType = j.value;
+          }
+        }
+        prods.push(
+          new Product(
+            name,
+            amount,
+            description,
+            category,
+            internal_storage,
+            productType,
+            day
+          )
+        );
+      }
+    }
+    var message = JSON.stringify(prods);
+    parent.postMessage(
+      { pluginMessage: { type: "create-post", body: message } },
+      "*"
+    );
+  };
+</script>
+
+<script>
+  document.getElementById("add_item").onclick = () => {
+    no_of_items++;
+    // create field set
+    var fieldset = document.createElement("fieldset");
+    fieldset.id = "product" + no_of_items;
+    fieldset.className = "product";
+
+    // create device field
+    var deviceField = document.createElement("select");
+    deviceField.id = "selDevices" + no_of_items;
+    deviceField.className = "selDevices";
+    fieldset.appendChild(deviceField);
+    getDevices(deviceField);
+
+    // create category field
+    var categoryField = document.createElement("select");
+    categoryField.id = "selCategory" + no_of_items;
+    categoryField.className = "selCategory";
+    fieldset.appendChild(categoryField);
+    getCategory(categoryField);
+
+    // create productType field
+    var productTypeField = document.createElement("select");
+    productTypeField.id = "selProductType" + no_of_items;
+    productTypeField.className = "selProductType";
+    fieldset.appendChild(productTypeField);
+    getProductTypes(productTypeField);
+
+    // create amount field
+    var amountField = document.createElement("input");
+    amountField.id = "amount" + no_of_items;
+    amountField.className = "amount";
+    amountField.placeholder = "amount";
+    fieldset.appendChild(amountField);
+
+    // create size field
+    var sizeField = document.createElement("select");
+    sizeField.id = "size" + no_of_items;
+    sizeField.className = "size";
+    fieldset.appendChild(sizeField);
+    getSizes(sizeField);
+
+    // create description field
+    var descriptionField = document.createElement("input");
+    descriptionField.id = "description" + no_of_items;
+    descriptionField.className = "description";
+    descriptionField.placeholder = "description";
+    fieldset.appendChild(descriptionField);
+
+    var container = document.getElementById("list");
+    container.append(fieldset);
+  };
+</script>
+

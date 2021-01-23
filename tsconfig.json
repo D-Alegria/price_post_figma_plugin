@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@figma",
+    ],
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "module": "AMD",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}
