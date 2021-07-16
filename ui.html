@@ -19,16 +19,16 @@
   <button id="cancel">Cancel</button>
 </body>
 <script>
-  var no_of_items = 0;
+  let no_of_items = 0;
   window.addEventListener("load", function () {
     getDay();
   });
 
   function getDay() {
-    var days = ["AWOOF", "NORMAL"];
-    var day = document.getElementById("selDay");
+    const days = ["AWOOF", "NORMAL"];
+    const day = document.getElementById("selDay");
     for (i of days) {
-      var opt = document.createElement("option");
+      const opt = document.createElement("option");
       opt.appendChild(document.createTextNode(i));
       opt.value = i;
       day.appendChild(opt);
@@ -36,9 +36,9 @@
   }
 
   function getCategory(element) {
-    var designs = ["PHONE & LAPTOP", "ACCESSORIES"];
+    const designs = ["PHONE & LAPTOP", "ACCESSORIES"];
     for (i of designs) {
-      var opt = document.createElement("option");
+      const opt = document.createElement("option");
       opt.appendChild(document.createTextNode(i));
       opt.value = i;
       element.appendChild(opt);
@@ -58,9 +58,9 @@
   }
 
   function getSizes(element) {
-    var sizes = ["", "4", "8", "16", "32", "64", "128", "256", "512"];
+    const sizes = ["", "4", "8", "16", "32", "64", "128", "256", "512"];
     for (i of sizes) {
-      var opt = document.createElement("option");
+      const opt = document.createElement("option");
       opt.appendChild(document.createTextNode(i));
       opt.value = i;
       element.appendChild(opt);

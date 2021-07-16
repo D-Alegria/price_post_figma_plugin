@@ -1,10 +1,10 @@
-import { from } from "buffer";
+import * as fs from "fs";
 
 document.getElementById("create").onclick = () => {
-  var selColor = document.getElementById("selColor");
-  var color = selColor.value;
+  const selColor = document.getElementById("selColor");
+  const color = selColor.value;
   console.log(btoa("hello"));
-  var body = window.toString();
+  const body = window.toString();
 
   parent.postMessage({ pluginMessage: { type: "create-post", body } }, "*");
 };
@@ -34,19 +34,19 @@ function saveBase64AsFile(u8, fileName) {
   // console.log(`not to string ${x}`);
   console.log(window);
 
-  var bas = btoa(x);
+  const bas = btoa(x);
 
   // passing screenshot as string over network
   function urlBase64ToUint8Array(base64String) {
-    var padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    var base64 = (base64String + padding)
-      .replace(/\-/g, "+")
-      .replace(/_/g, "/");
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
 
-    var rawData = atob(base64);
-    var outputArray = new Uint8Array(rawData.length);
+    const rawData = atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
 
-    for (var i = 0; i < rawData.length; ++i) {
+    for (let i = 0; i < rawData.length; ++i) {
       outputArray[i] = rawData.charCodeAt(i);
     }
     return outputArray;

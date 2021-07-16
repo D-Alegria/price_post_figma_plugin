@@ -199,9 +199,9 @@ figma.ui.onmessage = async (msg) => {
 
           // change installment amount
           if (child.name == "installment amount") {
-            const count = parseInt(product.amount);
+            const amount = parseInt(product.amount);
 
-            child.characters = "N" + formatMoney(count / 10.2402168692) + "/mo";
+            child.characters = "N" + formatMoney(amount / 10.2402168692) + "/mo";
           }
         }
 
@@ -230,8 +230,8 @@ figma.ui.onmessage = async (msg) => {
 };
 
 function formatMoney(amount: number, decimalCount = 2, x = 3) {
-  var re =
-    "\\d(?=(\\d{" + (x || 3) + "})+" + (decimalCount > 0 ? "\\." : "$") + ")";
+  const re =
+      "\\d(?=(\\d{" + (x || 3) + "})+" + (decimalCount > 0 ? "\\." : "$") + ")";
   return amount
     .toFixed(Math.max(0, ~~decimalCount))
     .replace(new RegExp(re, "g"), "$&,");
